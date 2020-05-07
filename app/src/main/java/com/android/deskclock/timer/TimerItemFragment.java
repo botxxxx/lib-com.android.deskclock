@@ -19,6 +19,7 @@ package com.android.deskclock.timer;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,11 @@ public class TimerItemFragment extends Fragment {
     private static final String KEY_TIMER_ID = "KEY_TIMER_ID";
     private int mTimerId;
 
-    /** The public no-arg constructor required by all fragments. */
-    public TimerItemFragment() {}
+    /**
+     * The public no-arg constructor required by all fragments.
+     */
+    public TimerItemFragment() {
+    }
 
     public static TimerItemFragment newInstance(Timer timer) {
         final TimerItemFragment fragment = new TimerItemFragment();
@@ -55,7 +59,7 @@ public class TimerItemFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         final Timer timer = getTimer();
         if (timer == null) {
             return null;
@@ -77,6 +81,15 @@ public class TimerItemFragment extends Fragment {
         final TimerItem view = (TimerItem) getView();
         if (view != null) {
             final Timer timer = getTimer();
+            try {
+                if (timer != null) {
+                    // Log.e("ATimer", "updateTime:" + timer.getRemainingTime());
+                    if (timer.getRemainingTime() <= 0)
+                        DataModel.getDataModel().startTimer(timer);
+                }
+            } catch (Exception e) {
+
+            }
             view.update(timer);
             return !timer.isReset();
         }

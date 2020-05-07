@@ -31,7 +31,6 @@ import android.net.Uri;
 import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.ArraySet;
-import android.util.Log;
 
 import com.android.deskclock.AlarmAlertWakeLock;
 import com.android.deskclock.LogUtils;
@@ -663,7 +662,6 @@ final class TimerModel {
         Timer nextExpiringTimer = null;
         for (Timer timer : getMutableTimers()) {
             if (timer.isRunning()) {
-                Log.e("ATimer", "updateAlarmManager:"+timer.getExpirationTime());
                 if (nextExpiringTimer == null) {
                     nextExpiringTimer = timer;
                 } else if (timer.getExpirationTime() < nextExpiringTimer.getExpirationTime()) {
